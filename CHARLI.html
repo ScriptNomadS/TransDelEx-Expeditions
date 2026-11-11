@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0f1116">
+  <title>TransExDel</title>
+  <meta name="description" content="Хмарна система управління транспортом, яку ми налаштуємо під ваш бізнес.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&display=swap">
+  <link rel="stylesheet" href="CHARLI.css">
+  <script src="CHARLI.js" type="module" defer></script>
+</head>
+<body>
+
+  <div class="scroll-sentinel" id="scroll-sentinel" aria-hidden="true"></div>
+
+  <!-- SVG sprite: icons are referenced via <use>, so each is defined once -->
+  <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <symbol id="icon-chevron" viewBox="0 0 12 12">
+      <path d="M2.5 4.5 6 8l3.5-3.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </symbol>
+    <symbol id="icon-lock" viewBox="0 0 20 24">
+      <rect x="2" y="10" width="16" height="12" rx="3" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M5.5 10V7a4.5 4.5 0 0 1 9 0v3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <circle cx="10" cy="16" r="1.6" fill="currentColor"/>
+    </symbol>
+    <symbol id="icon-calculator" viewBox="0 0 36 36">
+      <rect x="1.5" y="1.5" width="33" height="33" rx="4" fill="none" stroke="currentColor" stroke-width="2"/>
+      <path d="M18 1.5v33M1.5 18h33" stroke="currentColor" stroke-width="2"/>
+      <rect x="3" y="3" width="14" height="14" rx="2.5" fill="#2ee06f"/>
+      <path d="M10 6.5v7M6.5 10h7" stroke="#0f1116" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M23 10h6M26 6.8v0M26 13.2v0" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="m7 23 6 6m0-6-6 6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+      <path d="M23 26h6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>
+    </symbol>
+    <symbol id="icon-play" viewBox="0 0 56 40">
+      <rect x="2" y="2" width="48" height="34" rx="9" fill="#fff"/>
+      <path d="M21 11.5v15l13-7.5z" fill="#0f1116"/>
+    </symbol>
+    <symbol id="icon-route" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M13 3a8 8 0 0 1 8 8c0 6-8 13-8 13S5 17 5 11a8 8 0 0 1 8-8z"/>
+      <circle cx="13" cy="11" r="2.6"/>
+      <path d="M11 26v8c0 3 2 5 5 5h13"/>
+      <path d="M44 24a7.500 7.500 0 0 1 7.500 7.500c0 5.500-7.500 11.500-7.500 11.500s-7.500-6-7.500-11.500A7.500 7.500 0 0 1 44 24z"/>
+      <circle cx="44" cy="31.500" r="2.600" stroke="#2ee06f"/>
+      <circle cx="44" cy="49" r="1.500"/>
+    </symbol>
+    <symbol id="icon-wallet" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="4" y="11" width="48" height="36" rx="6"/>
+      <path d="M11 18h16"/>
+      <rect x="32" y="26" width="20" height="11" rx="3.500"/>
+      <circle cx="41" cy="31.500" r="1.800" stroke="#2ee06f"/>
+    </symbol>
+    <symbol id="icon-timer" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="28" cy="33" r="19"/>
+      <circle cx="28" cy="33" r="14.500" stroke-dasharray="1 5.500"/>
+      <path d="M22 5h12M28 5v9M45 13l3-3M11 13 8 10"/>
+      <path d="m28 33 6-5" stroke="#2ee06f"/>
+      <circle cx="28" cy="33" r="2" stroke="#2ee06f"/>
+    </symbol>
+    <symbol id="icon-schedule" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="12" width="50" height="40" rx="4"/>
+      <path d="M12 6v8M20 6v8M28 6v8M36 6v8M44 6v8"/>
+      <path d="M3 22h50M15.500 22v30M28 22v30M40.500 22v30M3 32h50M3 42h50"/>
+      <rect x="30" y="34" width="8" height="6" rx="1.500" stroke="#2ee06f"/>
+      <rect x="42" y="44" width="8" height="6" rx="1.500" stroke="#2ee06f"/>
+    </symbol>
+    <symbol id="icon-fuel" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 11h31M12 11v13"/>
+      <circle cx="43" cy="12" r="8"/>
+      <path d="M43 7c2.500 3.300 3.500 5 3.500 6.500a3.500 3.500 0 0 1-7 0C39.500 12 40.500 10.300 43 7z" stroke="#2ee06f"/>
+      <rect x="9" y="24" width="23" height="27" rx="2.500"/>
+      <rect x="14" y="30" width="13" height="9" rx="1.500"/>
+      <path d="M32 31h5c2 0 3 1.500 3 3v13M40 47v4M4 52h48"/>
+    </symbol>
+    <symbol id="icon-truck" viewBox="0 0 56 56" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="3" y="24" width="31" height="20" rx="2.500"/>
+      <path d="M34 29h9l8 9v6H34"/>
+      <path d="M44 29v9h7"/>
+      <circle cx="14" cy="46" r="4.500" fill="#0f1116"/>
+      <circle cx="42" cy="46" r="4.500" fill="#0f1116"/>
+      <rect x="7" y="12" width="10" height="7" rx="2" stroke="#2ee06f"/>
+      <rect x="21" y="12" width="10" height="7" rx="2" stroke="#2ee06f"/>
+    </symbol>
+  </svg>
+
+  <!-- ===================== HEADER ===================== -->
+  <header class="site-header" id="site-header">
+    <div class="container site-header__inner">
+
+      <a class="logo" href="/" aria-label="TransExDel — на головну">
+        <span class="logo__tiles" aria-hidden="true">
+          <span class="logo__tile logo__tile--a">T</span>
+          <span class="logo__tile">D</span>
+          <span class="logo__tile">L</span>
+          <span class="logo__tile">E</span>
+        </span>
+        <span class="logo__text">Expedition</span>
+      </a>
+
+      <div class="header-info" id="header-info">
+        <button class="lang" type="button" aria-label="Мова сайту: українська" aria-haspopup="true">
+          <span class="lang__code">UA</span>
+          <svg class="icon icon--chevron" aria-hidden="true"><use href="#icon-chevron"/></svg>
+        </button>
+        <a class="header-info__link header-info__link--email" href="mailto:support@TED-logistics.com">support@TED-logistics.com</a>
+        <a class="header-info__phone" href="tel:+380777777777">+38 077 777 77 77</a>
+        <a class="header-info__link header-info__link--accent" href="#callback">Замовити дзвінок</a>
+      </div>
+
+      <a class="login" href="/login">
+        <svg class="login__icon" aria-hidden="true"><use href="#icon-lock"/></svg>
+        <span class="login__label">Вхід</span>
+      </a>
+
+      <button class="burger" id="menu-toggle" type="button" aria-label="Відкрити меню" aria-expanded="false" aria-controls="site-nav header-info">
+        <svg class="burger__icon" viewBox="0 0 30 22" aria-hidden="true">
+          <path class="burger__line burger__line--top" d="M1.5 3h27"/>
+          <path class="burger__line burger__line--mid" d="M1.5 11h17"/>
+          <path class="burger__line burger__line--bot" d="M1.5 19h27"/>
+        </svg>
+      </button>
+
+      <nav class="nav" id="site-nav" aria-label="Основна навігація">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="/" aria-current="page">Головна</a></li>
+          <li><a class="nav__link nav__link--has-sub" href="#solutions">Рішення <svg class="icon icon--chevron" aria-hidden="true"><use href="#icon-chevron"/></svg></a></li>
+          <li><a class="nav__link nav__link--has-sub" href="#features">Можливості <svg class="icon icon--chevron" aria-hidden="true"><use href="#icon-chevron"/></svg></a></li>
+          <li><a class="nav__link nav__link--has-sub" href="#support">Підтримка <svg class="icon icon--chevron" aria-hidden="true"><use href="#icon-chevron"/></svg></a></li>
+          <li><a class="nav__link" href="#pricing">Вартість</a></li>
+          <li><a class="nav__link nav__link--has-sub" href="#company">Компанія <svg class="icon icon--chevron" aria-hidden="true"><use href="#icon-chevron"/></svg></a></li>
+          <li><a class="nav__link" href="#contacts">Контакти</a></li>
+        </ul>
+      </nav>
+
+    </div>
+  </header>
+
+  <div class="hero-shell">
+
+    <!-- ===================== HERO ===================== -->
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="container hero__inner">
+
+          <div class="hero__content">
+            <h1 class="hero__title" id="hero-title">TED-Logistics<sup class="hero__reg" aria-label="зареєстрований товарний знак">®</sup></h1>
+            <p class="hero__lead">Хмарна система управління транспортом, яку ми налаштуємо під Ваш бізнес</p>
+
+            <div class="hero__actions">
+              <a class="btn btn--primary" href="#request">Залишити заявку</a>
+              <a class="btn btn--secondary" href="#calculator">
+                <svg class="btn__icon" aria-hidden="true"><use href="#icon-calculator"/></svg>
+                <span>Калькулятор вартості</span>
+              </a>
+            </div>
+          </div>
+
+          <div class="hero__visual">
+            <img class="hero__city" src="assets/hero-truck.svg" width="1200" height="820" alt="" fetchpriority="high" decoding="async">
+
+            <svg class="hero__badge" viewBox="0 0 200 200" role="img" aria-label="Оптимізація маршрутів та розрахунок — це просто">
+              <defs>
+                <path id="badge-ring" d="M 19 100 a 81 81 0 1 1 162 0 a 81 81 0 1 1 -162 0"/>
+              </defs>
+              <circle cx="100" cy="100" r="98.5" class="badge__outer"/>
+              <circle cx="100" cy="100" r="72" class="badge__inner"/>
+              <text class="badge__text">
+                <textPath href="#badge-ring" textLength="505" lengthAdjust="spacing">ОПТИМІЗАЦІЯ МАРШРУТІВ ЦЕ ПРОСТО • РОЗРАХУНОК ТА&#160;&#160;</textPath>
+              </text>
+              <g class="badge__ant" fill="#fff">
+                <ellipse cx="86" cy="101" rx="12" ry="8.5" transform="rotate(-28 86 101)"/>
+                <ellipse cx="103" cy="119" rx="10" ry="7.5" transform="rotate(18 103 119)"/>
+                <ellipse cx="128" cy="122" rx="17" ry="10.5" transform="rotate(14 128 122)"/>
+                <path d="M80 92c-9-7-10-17 6-20M85 90c-4-8 1-16 14-14" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round"/>
+              </g>
+            </svg>
+          </div>
+
+        </div>
+      </section>
+    </main>
+
+    <div class="hero-shell__line hero-shell__line--top" aria-hidden="true"></div>
+  </div>
+
+  <!-- ===================== FEATURES ===================== -->
+  <section class="features" id="features" aria-labelledby="features-title">
+    <div class="container features__inner">
+
+      <svg class="features__frame" viewBox="0 0 600 360" aria-hidden="true" focusable="false">
+        <defs>
+          <linearGradient id="frame-gradient" gradientUnits="userSpaceOnUse" x1="594" y1="0" x2="0" y2="300">
+            <stop offset="0" stop-color="#fff" stop-opacity=".03"/>
+            <stop offset=".55" stop-color="#fff" stop-opacity=".1"/>
+            <stop offset="1" stop-color="#fff" stop-opacity=".09"/>
+          </linearGradient>
+        </defs>
+        <path d="M594 0 62 260Q0 290 0 359" fill="none" stroke="url(#frame-gradient)" stroke-width="3" stroke-linecap="round"/>
+      </svg>
+
+      <div class="features__main">
+        <h2 class="features__title" id="features-title">Логістика останньої милі – ефективне планування та маршрутизація доставок</h2>
+        <p class="features__lead">Ще до відправлення машин ви будете знати:</p>
+
+        <ul class="features__list">
+          <li class="feature"><svg class="feature__icon" aria-hidden="true"><use href="#icon-route"/></svg><span class="feature__label">Пробіг</span></li>
+          <li class="feature"><svg class="feature__icon" aria-hidden="true"><use href="#icon-wallet"/></svg><span class="feature__label">Прибуток</span></li>
+          <li class="feature"><svg class="feature__icon" aria-hidden="true"><use href="#icon-timer"/></svg><span class="feature__label">Тривалість</span></li>
+          <li class="feature"><svg class="feature__icon" aria-hidden="true"><use href="#icon-schedule"/></svg><span class="feature__label">Розклад</span></li>
+          <li class="feature"><svg class="feature__icon" aria-hidden="true"><use href="#icon-fuel"/></svg><span class="feature__label">Витрати</span></li>
+          <li class="feature"><svg class="feature__icon" aria-hidden="true"><use href="#icon-truck"/></svg><span class="feature__label">Завантаженість</span></li>
+        </ul>
+      </div>
+
+      <aside class="features__aside">
+        <a class="video-cta" href="#presentation">
+          <span class="video-cta__play" aria-hidden="true"><svg class="video-cta__icon"><use href="#icon-play"/></svg></span>
+          <span class="video-cta__title">Переглянути відео презентацію</span>
+        </a>
+        <p class="features__note">Дана система автоматично розподіляє замовлення між автомобілями і виконує розрахунок маршрутів. При цьому враховується більше 80 параметрів.</p>
+      </aside>
+
+      <div class="features__line" aria-hidden="true"></div>
+    </div>
+  </section>
+
+
+  <!-- ===================== RESULTS ===================== -->
+  <section class="results" id="results" aria-labelledby="results-title">
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <pattern id="hatch" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(-45)">
+          <line x1="0" y1="0" x2="0" y2="14" stroke="#4bd88a" stroke-opacity=".6" stroke-width="1.5"/>
+        </pattern>
+      </defs>
+    </svg>
+
+    <div class="container">
+      <h2 class="results__title" id="results-title">Після перших місяців використання ви отримаєте</h2>
+    </div>
+
+    <ul class="results__grid">
+        <li class="result">
+          <div class="result__chart">
+            <svg class="result__svg" viewBox="0 0 635 450" aria-hidden="true" focusable="false">
+              <rect x="84" y="138" width="454" height="203" fill="url(#hatch)"/>
+              <path class="result__tail" d="M24 155Q60 143 92 138"/>
+              <path class="result__tail" d="M533 338C560 334 590 330 607 324"/>
+              <path class="result__curve" d="M92 138C160 142 230 190 300 240S450 322 533 338"/>
+              <circle class="result__dot" cx="92" cy="138" r="11"/>
+              <circle class="result__dot result__dot--end" cx="533" cy="338" r="11"/>
+            </svg>
+            <p class="result__value">-20%</p>
+          </div>
+          <p class="result__label">Загальний пробіг транспортних засобів</p>
+        </li>
+        <li class="result">
+          <div class="result__chart">
+            <svg class="result__svg" viewBox="0 0 635 450" aria-hidden="true" focusable="false">
+              <rect x="77" y="119" width="454" height="240" fill="url(#hatch)"/>
+              <path class="result__tail" d="M26 373Q45 355 77 351"/>
+              <path class="result__tail" d="M527 120C560 125 590 138 609 135"/>
+              <path class="result__curve" d="M77 351C240 290 380 130 476 108C500 104 515 112 527 120"/>
+              <circle class="result__dot" cx="77" cy="351" r="11"/>
+              <circle class="result__dot result__dot--end" cx="527" cy="120" r="11"/>
+            </svg>
+            <p class="result__value">+30%</p>
+          </div>
+          <p class="result__label">Кількість відвіданих точок за той же час</p>
+        </li>
+        <li class="result">
+          <div class="result__chart">
+            <svg class="result__svg" viewBox="0 0 635 450" aria-hidden="true" focusable="false">
+              <rect x="86" y="138" width="454" height="203" fill="url(#hatch)"/>
+              <path class="result__tail" d="M26 152Q55 146 93 137"/>
+              <path class="result__tail" d="M535 338C560 342 585 346 609 351"/>
+              <path class="result__curve" d="M93 137C140 145 165 215 230 236S300 230 345 237S450 300 535 338"/>
+              <circle class="result__dot" cx="93" cy="137" r="11"/>
+              <circle class="result__dot result__dot--end" cx="535" cy="338" r="11"/>
+            </svg>
+            <p class="result__value">-25%</p>
+          </div>
+          <p class="result__label">Транспортні витрати</p>
+        </li>
+        <li class="result">
+          <div class="result__chart">
+            <svg class="result__svg" viewBox="0 0 635 450" aria-hidden="true" focusable="false">
+              <rect x="86" y="72" width="454" height="349" fill="url(#hatch)"/>
+              <path class="result__tail" d="M26 74Q55 72 86 75"/>
+              <path class="result__tail" d="M536 419C565 426 590 430 609 432"/>
+              <path class="result__curve" d="M86 75C160 85 200 100 260 165C320 235 370 280 410 340C430 372 450 405 536 419"/>
+              <circle class="result__dot" cx="86" cy="75" r="11"/>
+              <circle class="result__dot result__dot--end" cx="536" cy="419" r="11"/>
+            </svg>
+            <p class="result__value">-75%</p>
+          </div>
+          <p class="result__label">Час, необхідний логісту на планування маршрутів</p>
+        </li>
+    </ul>
+  </section>
+
+
+  <!-- ===================== MODULES ===================== -->
+  <section class="modules" id="modules" aria-labelledby="modules-title" data-tabs>
+    <div class="container">
+      <div class="modules__stage">
+
+        <div class="modules__nav">
+          <h2 class="modules__label" id="modules-title">4 модуля системи</h2>
+          <div class="modules__tablist" role="tablist" aria-label="Модулі системи" aria-orientation="vertical">
+          <button class="module-tab" id="tab-planning" type="button" role="tab" aria-selected="true" aria-controls="panel-planning">
+            <span class="module-tab__text">Планування</span>
+          </button>
+          <button class="module-tab" id="tab-control" type="button" role="tab" aria-selected="false" aria-controls="panel-control" tabindex="-1">
+            <span class="module-tab__text">Контроль</span>
+          </button>
+          <button class="module-tab" id="tab-mobile-trade" type="button" role="tab" aria-selected="false" aria-controls="panel-mobile-trade" tabindex="-1">
+            <span class="module-tab__text">Мобільна торгівля</span>
+          </button>
+          <button class="module-tab" id="tab-analytics" type="button" role="tab" aria-selected="false" aria-controls="panel-analytics" tabindex="-1">
+            <span class="module-tab__text">Аналітика</span>
+          </button>
+          </div>
+        </div>
+
+        <div class="modules__panels">
+          <article class="module is-active" id="panel-planning" role="tabpanel" aria-labelledby="tab-planning" tabindex="0">
+            <img class="module__image" src="assets/module-planning.jpg" width="515" height="540" alt="" decoding="async">
+            <div class="module__body">
+              <ul class="module__list">
+                <li>Розрахунок маршрутів доставки</li>
+                <li>Врахування часових вікон</li>
+              </ul>
+              <p class="module__text">Система заздалегідь попереджає логіста про можливі запізнення в точки доставки, переробки водіїв та перевантаження машин.</p>
+            </div>
+          </article>
+          <article class="module" id="panel-control" role="tabpanel" aria-labelledby="tab-control" tabindex="0">
+            <img class="module__image" src="assets/module-control.jpg" width="515" height="540" alt="" loading="lazy" decoding="async">
+            <div class="module__body">
+              <ul class="module__list">
+                <li>GPS-моніторинг</li>
+                <li>План/факт</li>
+              </ul>
+              <p class="module__text">Відстеження в режимі реального часу факту виконання водіями запланованих маршрутів та швидкісних обмежень.</p>
+            </div>
+          </article>
+          <article class="module" id="panel-mobile-trade" role="tabpanel" aria-labelledby="tab-mobile-trade" tabindex="0">
+            <img class="module__image" src="assets/module-mobile-trade.jpg" width="515" height="540" alt="" loading="lazy" decoding="async">
+            <div class="module__body">
+              <ul class="module__list">
+                <li>Товари, замовлення, залишки, борги</li>
+                <li>Завдання, фотозвіти</li>
+              </ul>
+              <p class="module__text">Вся інформація про продукти: вартість, відповідність викладки, фотографії, розташування рекламних матеріалів, товарообіг, взаєморозрахунки, ціни та акції</p>
+            </div>
+          </article>
+          <article class="module" id="panel-analytics" role="tabpanel" aria-labelledby="tab-analytics" tabindex="0">
+            <img class="module__image" src="assets/module-analytics.jpg" width="515" height="540" alt="" loading="lazy" decoding="async">
+            <div class="module__body">
+              <ul class="module__list">
+                <li>Інтерактивні панелі</li>
+                <li>Власна документація</li>
+              </ul>
+              <p class="module__text">Статистика щодо якості обслуговування клієнтів, перевищення водіями планових пробігів, рентабельності маршрутів і точок.</p>
+            </div>
+          </article>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</body>
+</html>
